@@ -15,3 +15,9 @@ def usage():
     print("invocation:")
     print("    send_reminders 'date|Meeting Title|Emails' ")
     return 1
+
+
+def dow(date):
+    """create datetime.datetim.strptime object from a str provided by the user"""
+    dateobj = datetime.datetime.strptime(date, r"%Y-%m-%d")
+    return dateobj.strftime("%A")
