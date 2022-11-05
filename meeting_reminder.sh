@@ -7,8 +7,10 @@ meeting_info=$(zenity --forms \
 	--forms-date-format='%Y-%m-%d' \
 	2>/dev/null)
 
-ENTRY= $(zenity --password --username)
-
+ENTRY= zenity --forms --title="Login" \
+	--text="Enter your password" \
+	--add-entry="User" \
+	--add-entry="Password" \
 
 if [[ -n "$meeting_info" ]] ; then
 	python3 send_reminders.py "$meeting_info" "$ENTRY"
