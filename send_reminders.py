@@ -8,8 +8,6 @@ import email
 import smtplib
 import sys
 
-user_dict={"kballadares996@gmail.com":"ufxouekcqbavlutz"}
-
 def usage():
     """Print usage message in case of need"""
     print("send_reminders: Send meeting reminders\n")
@@ -43,12 +41,12 @@ See you there.
     return message
 
 
-def send_message(user, message, emails):
+def send_message(user,password, message, emails):
     """ Send the message to the selected email
     """
     smtp = smtplib.SMTP("smtp.gmail.com",587)
     smtp.starttls()
-    smtp.login(user, user_dict[user])
+    smtp.login(user, password)
     print("Login Success!")
     for email in emails.split(","):
         del message["To"]
@@ -65,9 +63,9 @@ def main():
 
     try:
         date, title, emails = sys.argv[1].split("|")
-        user = sys.argv[2].split("|")
+        user, password = sys.argv[2].split("|")
         message = message_template(date, title)
-        send_message(user[0],message, emails)
+        send_message(user,password,message, emails)
         print("Successfully sent reminders to:", emails)
     except Exception as e:
         print("Failure to send email due to: {}".format(e), file=sys.stderr)
