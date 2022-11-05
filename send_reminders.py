@@ -23,7 +23,28 @@ def dow(date):
     return dateobj.strftime("%A")
 
 
+def message_template(date, title):
+    """Template of the message we are willing to send"""
+    message = email.message.EmailMessage()
+    weekday = dow(date)
+    message["Subject"] = f'Meeting reminder: "{title}"'
+    message.set_content(
+        f"""
+Hi all!
+
+this is a quick mail to remind you all that we have meeting about:
+"{title}"
+the {weekday} {date}.
+
+See you there.
+"""
+    )
+    return message
+
+
 def send_message(message, emails):
+    """ Send the message to the selected email
+    """
     smtp = smtp.SMTP("localhost")
     message["From"] = "noreply@example.com"
     for email in emails.split(","):
@@ -35,6 +56,8 @@ def send_message(message, emails):
 
 
 def main():
+    """ Run The program and all the functions
+    """
     if len(sys.argv) < 2:
         return usage()
 
