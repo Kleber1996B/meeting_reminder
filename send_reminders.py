@@ -45,8 +45,12 @@ See you there.
 def send_message(message, emails):
     """ Send the message to the selected email
     """
-    smtp = smtp.SMTP("localhost")
-    message["From"] = "noreply@example.com"
+    print("entro")
+    smtp = smtplib.SMTP("smtp.gmail.com",587)
+    smtp.login("kballadares996@gmail.com", "xpL3D2ef")
+    #smtp = smtplib.SMTP('localhost')
+    print("HOLA")
+    #message["From"] = "noreply@example.com"
     for email in emails.split(","):
         del message["To"]
         message["To"] = email
@@ -63,9 +67,10 @@ def main():
 
     try:
         date, title, emails = sys.argv[1].split("|")
-        print(emails)
         message = message_template(date, title)
+        print("1")
         send_message(message, emails)
+        print("2")
         print("Successfully sent reminders to:", emails)
     except Exception as e:
         print("Failure to send email due to: {}".format(e), file=sys.stderr)
