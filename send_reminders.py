@@ -32,7 +32,7 @@ def message_template(date, title):
         f"""
 Hi all!
 
-this is a quick mail to remind you all that we have meeting about:
+This is a quick mail to remind you all that we have meeting about:
 "{title}"
 the {weekday} {date}.
 
@@ -45,12 +45,10 @@ See you there.
 def send_message(message, emails):
     """ Send the message to the selected email
     """
-    print("entro")
     smtp = smtplib.SMTP("smtp.gmail.com",587)
-    smtp.login("kballadares996@gmail.com", "xpL3D2ef")
-    #smtp = smtplib.SMTP('localhost')
-    print("HOLA")
-    #message["From"] = "noreply@example.com"
+    smtp.starttls()
+    smtp.login("kballadares996@gmail.com", "ufxouekcqbavlutz")
+    print("Login Success!")
     for email in emails.split(","):
         del message["To"]
         message["To"] = email
@@ -67,10 +65,10 @@ def main():
 
     try:
         date, title, emails = sys.argv[1].split("|")
+        #user, password = sys.argv[2].split("|")
+        #print(user)
         message = message_template(date, title)
-        print("1")
         send_message(message, emails)
-        print("2")
         print("Successfully sent reminders to:", emails)
     except Exception as e:
         print("Failure to send email due to: {}".format(e), file=sys.stderr)
